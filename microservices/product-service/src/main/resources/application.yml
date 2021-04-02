@@ -5,12 +5,6 @@ logging:
     root: INFO
     by.ilya.microservices: DEBUG
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-
 ---
 spring.profiles: docker
 

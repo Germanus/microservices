@@ -9,19 +9,22 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebFlux;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+// import io.swagger.v3.oas.models.OpenAPI;
+// import io.swagger.v3.oas.models.info.Info;
+// import io.swagger.v3.oas.models.info.License;
 
-import static java.util.Collections.emptyList;
-import static org.springframework.http.HttpMethod.GET;
-import static springfox.documentation.builders.RequestHandlerSelectors.basePackage;
-import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
+// import springfox.documentation.builders.PathSelectors;
+// import springfox.documentation.service.ApiInfo;
+// import springfox.documentation.service.Contact;
+// import springfox.documentation.spring.web.plugins.Docket;
 
-@EnableSwagger2WebFlux
+// import static java.util.Collections.emptyList;
+// import static org.springframework.http.HttpMethod.GET;
+// import static springfox.documentation.builders.RequestHandlerSelectors.basePackage;
+// import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
+
+@OpenAPIDefinition
 @SpringBootApplication
 @ComponentScan("by.ilya")
 public class ProductCompositeServiceApplication implements WebFluxConfigurer {
@@ -41,27 +44,37 @@ public class ProductCompositeServiceApplication implements WebFluxConfigurer {
 	 *
 	 * @return
 	 */
-	@Bean
-	public Docket apiDocumentation() {
+	// @Bean
+	// public Docket apiDocumentation() {
 
-		return new Docket(SWAGGER_2)
-			.select()
-			.apis(basePackage("by.ilya.microservices.composite.product"))
-			.paths(PathSelectors.any())
-			.build()
-                .globalResponses(GET, emptyList())
-				.apiInfo(new ApiInfo(
-                    apiTitle,
-                    apiDescription,
-                    apiVersion,
-                    apiTermsOfServiceUrl,
-                    new Contact(apiContactName, apiContactUrl, apiContactEmail),
-                    apiLicense,
-                    apiLicenseUrl,
-                    emptyList()
-                ));
-    }
+	// 	return new Docket(SWAGGER_2)
+	// 		.select()
+	// 		.apis(basePackage("by.ilya.microservices.composite.product"))
+	// 		.paths(PathSelectors.any())
+	// 		.build()
+    //             .globalResponses(GET, emptyList())
+	// 			.apiInfo(new ApiInfo(
+    //                 apiTitle,
+    //                 apiDescription,
+    //                 apiVersion,
+    //                 apiTermsOfServiceUrl,
+    //                 new Contact(apiContactName, apiContactUrl, apiContactEmail),
+    //                 apiLicense,
+    //                 apiLicenseUrl,
+    //                 emptyList()
+    //             ));
+    // }
 
+	// @Bean
+    // public OpenAPI customOpenAPI() {
+    //  return new OpenAPI()
+    //       .info(new Info()
+    //       .title("sample application API")
+    //       .version("1.0.0")
+    //       .description("Description")
+    //       .termsOfService("http://swagger.io/terms/")
+    //       .license(new License().name("Apache 2.0").url("http://springdoc.org")));
+    // }
 
 	@Bean
 	RestTemplate restTemplate(){
@@ -73,10 +86,10 @@ public class ProductCompositeServiceApplication implements WebFluxConfigurer {
 	}
 
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/swagger-ui.html**")
-		.addResourceLocations("classpath:/META-INF/resources");
-	}
+	// @Override
+	// public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	// 	registry.addResourceHandler("/swagger-ui.html**")
+	// 	.addResourceLocations("classpath:/META-INF/resources");
+	// }
 
 }

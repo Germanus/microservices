@@ -1,5 +1,13 @@
-
 server.port: 7003
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost/review-db
+    username: user
+    password: pwd
 
 logging:
   level:
@@ -7,5 +15,9 @@ logging:
     by.ilya: DEBUG
 ---
 spring.profiles: docker
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/review-db
 
 server.port: 8080

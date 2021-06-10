@@ -122,6 +122,60 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         }
     }
 
+    @Override
+    public Review createReview(Review review) {
+        return null;
+    }
+
+
+    @Override
+    public void deleteReviews(int productId) {
+        
+    }
+
+
+    @Override
+    public Recommendation createRecommendation(Recommendation body) {
+        return null;
+    }
+
+
+    @Override
+    public void deleteRecommendations(int productId) {
+        
+    }
+
+
+    @Override
+    public Product createProduct(Product body) {
+        try {
+            return this.restTemplate.postForObject(productServiceUrl, body, Product.class);
+        } catch (HttpClientErrorException  ex) {
+            throw handleHttpClientException(ex);
+        }        
+    }
+
+    @Override
+    public void deleteProduct(int productId) {
+        try {
+            restTemplate.delete(productServiceUrl + "/" + productId);
+        } catch (HttpClientErrorException ex) {
+            throw handleHttpClientException(ex);
+        }
+    }
+
+    private RuntimeException handleHttpClientException(HttpClientErrorException ex) {
+        switch (ex.getStatusCode()){
+            case NOT_FOUND: return new NotFoundException(getErrorMessage(ex));
+            case UNPROCESSABLE_ENTITY:  return new InvalidInputException(getErrorMessage(ex));
+            default:
+                LOG.warn("Got a unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
+                LOG.warn("Error body: {}", ex.getResponseBodyAsString());
+                return ex;
+        }
+    }
+
+
     private String getErrorMessage(HttpClientErrorException ex) {
         try {
             return mapper.readValue(ex.getResponseBodyAsString(), HttpErrorInfo.class).getMessage();

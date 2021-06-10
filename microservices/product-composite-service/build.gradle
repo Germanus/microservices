@@ -13,17 +13,16 @@ repositories {
 	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
 	maven { url 'https://repo.spring.io/snapshot' }
-	maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+	maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local/' }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation project(':api')
 	implementation project(':util')
-	implementation('io.springfox:springfox-swagger2:3.0.0-SNAPSHOT')
-	implementation('io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT')
-	implementation('io.springfox:springfox-spring-webflux:3.0.0-SNAPSHOT')
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation('org.springdoc:springdoc-openapi-webflux-ui:1.5.8')
+	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testCompileOnly 'junit:junit:4.12' 

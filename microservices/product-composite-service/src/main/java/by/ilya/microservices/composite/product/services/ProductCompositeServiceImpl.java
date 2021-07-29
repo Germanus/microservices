@@ -71,16 +71,16 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
     @Override
     public void createCompositeProduct(ProductAggregate body) {
         try {
+            LOG.debug("createCompositeProduct: MESSAGE");        
+            LOG.warn("createCompositeProduct: warning");    
             Product product = new Product(body.getProductId(), 
             body.getName(), body.getWeight(), null);
             integration.createProduct(product);
     
             if (body.getRecommendations() != null) {
                 body.getRecommendations().forEach(r -> {
-                    Recommendation recommendation = new 
-                    Recommendation(body.getProductId(), 
-                    r.getRecommendationId(), r.getAuthor(), r.getRate(), 
-                    r.getContent(), null);
+                    Recommendation recommendation = new Recommendation(body.getProductId(), 
+                    r.getRecommendationId(), r.getAuthor(), r.getRate(), r.getContent(), null);
                     integration.createRecommendation(recommendation);
                 });
             }

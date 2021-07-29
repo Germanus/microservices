@@ -18,8 +18,10 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation('io.springfox:springfox-swagger2:3.0.0-SNAPSHOT')
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation('org.springdoc:springdoc-openapi-webflux-ui:1.5.8')
+	implementation 'io.swagger.core.v3:swagger-annotations:2.1.10'
+	implementation 'org.springframework:spring-web:5.3.6'
 }
 
 test {

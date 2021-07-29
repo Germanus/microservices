@@ -81,6 +81,12 @@ spring.profiles: docker
 
 server.port: 8080
 
+logging:
+  level:
+    root: DEBUG
+    by.ilya: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+
 app:
   product-service:
     host: product

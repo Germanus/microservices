@@ -44,6 +44,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product createProduct(Product product) {
         try{
+            LOG.info("create PROduct INFO");
+            LOG.debug("create PROduct DEBUG");
+            LOG.warn("create PROduct warn");
             ProductEntity entity = this.mapper.apiToEntity(product);
             ProductEntity newEntity = this.productRepository.save(entity);
             return mapper.entityToApi(newEntity);

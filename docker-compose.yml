@@ -1,7 +1,5 @@
 version: '2.1'
 
-mon
-
 services:
   product:
     build: microservices/product-service
@@ -33,6 +31,7 @@ services:
     mem_limit: 350m
     ports:
       - "8080:8080"
+      - "8003:8003"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
   
@@ -57,6 +56,6 @@ services:
       - MYSQL_PASSWORD=pwd 
     healthcheck: 
       test: ["CMD", "mysqladmin", "ping", "-uuser", "-ppwd", "-h", "localhost"]
-      internal: 10s
+      interval: 10s
       timeout: 5s
       retries: 10

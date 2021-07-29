@@ -2,14 +2,14 @@ package by.ilya.microservices.core.recommendation.services;
 
 import java.util.List;
 
-import org.mapstruct.MapperConfig;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 import by.ilya.api.core.recommendation.Recommendation;
 import by.ilya.microservices.core.recommendation.persistence.RecommendationEntity;
 
-@MapperConfig(componentModel = "spring")
+@Mapper(componentModel = "spring")
 public interface RecommendationMapper {
     
     @Mappings({
@@ -19,7 +19,7 @@ public interface RecommendationMapper {
     Recommendation entityToApi(RecommendationEntity entity);
 
     @Mappings({
-        @Mapping(target = "rating", source="api.rate"),
+        @Mapping(target = "rating", source="rate"),
         @Mapping(target = "id", ignore = true),
         @Mapping(target = "version", ignore = true)
     })

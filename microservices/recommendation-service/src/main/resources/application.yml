@@ -9,10 +9,21 @@ logging:
   level:
     root: INFO
     by.ilya: DEBUG
+
+spring:
+  autoconfigure:
+    exclude:
+    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 ---
 spring.profiles: docker
 
 spring.data.mongodb.host: mongodb
+
+logging:
+  level:
+    root: DEBUG
+    by.ilya: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
 
 server.port: 8080
 

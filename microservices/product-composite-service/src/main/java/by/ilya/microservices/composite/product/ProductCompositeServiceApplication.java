@@ -10,19 +10,6 @@ import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-// import io.swagger.v3.oas.models.OpenAPI;
-// import io.swagger.v3.oas.models.info.Info;
-// import io.swagger.v3.oas.models.info.License;
-
-// import springfox.documentation.builders.PathSelectors;
-// import springfox.documentation.service.ApiInfo;
-// import springfox.documentation.service.Contact;
-// import springfox.documentation.spring.web.plugins.Docket;
-
-// import static java.util.Collections.emptyList;
-// import static org.springframework.http.HttpMethod.GET;
-// import static springfox.documentation.builders.RequestHandlerSelectors.basePackage;
-// import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
 
 @OpenAPIDefinition
 @SpringBootApplication

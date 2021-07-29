@@ -16,8 +16,8 @@ assertCurl() {
   local expectedHttpCode=$1
   local curlCmd="$2 -w \"%{http_code}\""
   local result=$(eval $curlCmd)
-  local httpCode="${result:(-3)}"
-  RESPONSE='' && (( ${#result} > 3 )) && RESPONSE="${result%???}"
+  local httpCode="${result}"
+  RESPONSE=''
 
   if [ "$httpCode" = "$expectedHttpCode" ]
   then
@@ -68,7 +68,7 @@ waitForService() {
     until testUrl $url
     do
         n=$((n + 1))
-        if [[ $n == 100 ]]
+        if [ $n = 100 ]
         then
             echo " Give up"
             exit 1
@@ -79,6 +79,46 @@ waitForService() {
     done
 }
 
+recreateComposite() {
+    local productId=$1
+    local compositeBody="$2"
+    echo $compositeBody
+   
+    assertCurl 200 "curl -X DELETE http://$HOST:$PORT/product-composite/${productId} -s"
+    curl -X POST http://$HOST:$PORT/product-composite -H 'accept: */*' -H "Content-Type: application/json" -d "$compositeBody"
+}
+
+setupTestdata() {
+
+    body=\
+'{"productId":3,"name":"product 1","weight":1, "recommendations":[ 
+        {"recommendationId":1,"author":"author 1","rate":1,"content":"content 1"},
+        {"recommendationId":2,"author":"author 2","rate":2,"content":"content 2"},
+        {"recommendationId":3,"author":"author 3","rate":3,"content":"content 3"}
+    ], "reviews":[
+        {"reviewId":1,"author":"author 1","subject":"subject 1","content":"content 1"},
+        {"reviewId":2,"author":"author 2","subject":"subject 2","content":"content 2"},
+        {"reviewId":3,"author":"author 3","subject":"subject 3","content":"content 3"}
+    ]}'
+    recreateComposite 1 "$body"
+
+    body=\
+'{"productId":113,"name":"product 113","weight":113, "reviews":[
+    {"reviewId":1,"author":"author 1","subject":"subject 1","content":"content 1"},
+    {"reviewId":2,"author":"author 2","subject":"subject 2","content":"content 2"},
+    {"reviewId":3,"author":"author 3","subject":"subject 3","content":"content 3"}
+]}'
+    recreateComposite 113 "$body"
+
+    body=\
+'{"productId":213,"name":"product 213","weight":213, "recommendations":[
+    {"recommendationId":1,"author":"author 1","rate":1,"content":"content 1"},
+    {"recommendationId":2,"author":"author 2","rate":2,"content":"content 2"},
+    {"recommendationId":3,"author":"author 3","rate":3,"content":"content 3"}
+]}'
+    recreateComposite 213 "$body"
+
+}
 
 set -e
 
@@ -88,16 +128,18 @@ echo "HOST=${HOST}"
 echo "PORT=${PORT}"
 echo "Param=$@"
 
-#if [[ $@ == 'start' ]]
-#then
+if [ $@ = 'start' ]
+then
     echo "Restarting the test environment..."
     echo "$ docker-compose down"
     docker-compose down
     echo "$ docker-compose up -d"
     docker-compose up -d
-#fi
+fi
 
-waitForService http://$HOST:$PORT/product-composite/1
+waitForService curl -X DELETE http://$HOST:$PORT/product-composite/13
+
+setupTestdata
 
 # Verify that a normal request works, expect three recommendations and three reviews
 assertCurl 200 "curl http://$HOST:$PORT/product-composite/1 -s"
@@ -128,7 +170,7 @@ assertEqual "\"Invalid productId: -1\"" "$(echo $RESPONSE | jq .message)"
 assertCurl 400 "curl http://$HOST:$PORT/product-composite/invalidProductId -s"
 assertEqual "\"Type mismatch.\"" "$(echo $RESPONSE | jq .message)"
 
-if [[ $@ == *"stop"* ]]
+if [ $@ = *"stop"* ]
 then
     echo "We are done, stopping the test environment..."
     echo "$ docker-compose down"

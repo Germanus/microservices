@@ -2,14 +2,14 @@ package by.ilya.microservices.core.review.services;
 
 import java.util.List;
 
-import org.mapstruct.MapperConfig;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 import by.ilya.api.core.review.Review;
 import by.ilya.microservices.core.review.persistence.ReviewEntity;
 
-@MapperConfig(componentModel = "spring")
+@Mapper(componentModel = "spring")
 public interface ReviewMapper {
     
     @Mappings({
